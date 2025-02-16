@@ -28,6 +28,9 @@ jobs:
       - name: 格式化代码
         run: black .
         
+      - name: 查看目录结构
+        run: dir
+
       - name: 运行测试
         run: pytest tests/
         
