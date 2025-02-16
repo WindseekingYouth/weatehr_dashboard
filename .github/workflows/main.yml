@@ -56,5 +56,10 @@ jobs:
             Write-Host "Documentation file docs/docs.py not found. Skipping documentation generation."
           }
         
+      - name: 设置Git用户信息
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "GitHub Actions"
+        
       - name: 存储结果
         run: git tag -a "latest" -m "CI/CD 完成"
