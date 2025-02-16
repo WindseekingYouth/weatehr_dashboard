@@ -38,3 +38,4 @@ jobs:
         run: python docs/docs.py
         
       - name: 存储结果
+        run: git tag -a "latest" -m "CI/CD 完成"
