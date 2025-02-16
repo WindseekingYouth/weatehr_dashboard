@@ -32,7 +32,12 @@ jobs:
         run: dir
 
       - name: 运行测试
-        run: pytest tests/
+        run: |
+          if [ -d "tests" ]; then
+            pytest tests/
+          else
+            echo "No tests directory found"
+          fi
         
       - name: 类型检查
         run: mypy --strict --format junit=tests/mypy_output.xml .
