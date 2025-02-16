@@ -1,0 +1,33 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  PYTHON_VERSION: '3.10'
+  
+jobs:
+  test_and_check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检查代码格式
+        uses: actions/checkout@v2
+        run: black format .
+        
+      - name: 运行测试
+        uses: actions/checkout@v2
+        run: pytest tests/
+        
+      - name: 类型检查
+        uses: actions/checkout@v2
+        run: mypy --strict --format junit=tests/mypy_output.xml .
+        
+      - name: 生成文档
+        uses: actions/checkout@v2
+        run: python docs/docs.py
+        
+      - name: 存储结果
+        uses: actions/checkout@v2
+        run: git tag -a "latest" -m "CI/CD 完成"
