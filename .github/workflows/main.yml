@@ -39,9 +39,22 @@ jobs:
             Write-Host "No tests directory found"
           }
         
-        
-      - name: 生成文档
-        run: python docs/docs.py
+      - name: 类型检查
+        run: |
+          $files = Get-ChildItem -Recurse -Filter *.py -File
+          if ($files.Count -gt 0) {
+            mypy --strict --junit-xml=tests/mypy_output.xml $files
+          } else {
+            Write-Host "No Python files found to check."
+          }
+
+      - name: 生成文档 (跳过步骤如果文件不存在)
+        run: |
+          if (Test-Path "docs/docs.py") {
+            python docs/docs.py
+          } else {
+            Write-Host "Documentation file docs/docs.py not found. Skipping documentation generation."
+          }
         
       - name: 存储结果
         run: git tag -a "latest" -m "CI/CD 完成"
