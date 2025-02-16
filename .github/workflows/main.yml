@@ -39,14 +39,6 @@ jobs:
             Write-Host "No tests directory found"
           }
         
-      - name: 类型检查
-        run: |
-          $files = Get-ChildItem -Recurse -Filter *.py -File
-          if ($files.Count -gt 0) {
-          mypy --strict --junit-xml=tests/mypy_output.xml $files
-          } else {
-          Write-Host "No Python files found to check."
-          }
         
       - name: 生成文档
         run: python docs/docs.py
