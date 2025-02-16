@@ -40,8 +40,7 @@ jobs:
           }
         
       - name: 类型检查
-        run:  mypy --strict --junit-xml=tests/mypy_output.xml src/
-
+        run: mypy --strict --junit-xml=tests/mypy_output.xml '**/*.py'
         
       - name: 生成文档
         run: python docs/docs.py
